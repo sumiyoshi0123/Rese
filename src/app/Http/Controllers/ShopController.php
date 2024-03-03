@@ -37,9 +37,9 @@ class ShopController extends Controller
      * @param  \App\Models\Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function show(Shop $shop)
+    public function show($id)
     {
-        $item = Shop::find($shop);
+        $item = Shop::find($id);
             return response()->json([
                 'data' => $item
             ], 200);

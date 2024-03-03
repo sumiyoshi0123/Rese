@@ -1,23 +1,16 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import axios from "axios";
 import { useRouter } from "vue-router";
 
-const shops = ref([
-    {
-        "id": 1,
-        "name": "仙人",
-        "area": "東京都",
-        "category": "寿司",
-        "detail": "料理長厳選の食材から作る寿司を用いたコースをぜひお楽しみください。食材・味・価格、お客様の満足度を徹底的に追及したお店です。特別な日のお食事、ビジネス接待まで気軽に使用することができます。",
-        "img_url": "https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg",
-    },
-]);
-
+const shop = ref([])
 const date = ref('')
-
 const time = ref('')
-
 const number = ref('')
+
+onMounted(async () => {
+    const json = await axios.get("http://localhost/api/detail/");
+});
 
 </script>
 
@@ -25,10 +18,10 @@ const number = ref('')
     <div class="menu"></div>
     <div class="shop_data">
         <button class="prev" @click="prev()"> ＜ </button>
-        <div class="shop_name">{{ shops.name }}</div>
-        <div class="shop_img">{{ shops.img_url }}</div>
-        <div class="shop_tag">{{ shops.area }}{{ shops.category }}</div>
-        <div class="shop_detail">{{ shops.detail }}</div>
+        <div class="shop_name">{{ shop.name }}</div>
+        <div class="shop_img">{{ shop.img_url }}</div>
+        <div class="shop_tag">#{{ shop.area }}#{{ shop.category }}</div>
+        <div class="shop_detail">{{ shop.detail }}</div>
     </div>
     <div class="reserve_form">
         <div class="form_title">予約</div>
@@ -53,7 +46,7 @@ const number = ref('')
         <table class="reserve_data">
             <tr>
                 <th>shop</th>
-                <td>{{ shops.name }}</td>
+                <td>{{ shop.name }}</td>
             </tr>
             <tr>
                 <th>Date</th>

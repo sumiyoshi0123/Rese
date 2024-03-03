@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/', ShopController::class);
+Route::get('/detail/{id}',[ShopController::class],"show");
