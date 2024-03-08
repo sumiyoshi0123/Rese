@@ -2,9 +2,10 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import Header from './Header.vue';
 
-const shops = ref([]);
-const image = ref('');
+const shops = ref();
+const router = useRouter();
 
 onMounted(async () => {
     const json = await axios.get("http://localhost/api/");
@@ -12,30 +13,11 @@ onMounted(async () => {
     shops.value = data.data;
 });
 
-const open = ref(false);
-const menuButton = () => {
-    open.value = !open.value;
-};
-
-// const router = useRouter();
-// //詳細ページに移動する
-// const detail = async () => {
-//     router.push({ name: "detail", params: { id: shop.id } });
-// }
-
 </script>
 
 <template>
     <header class="header_item">
-        <div class="header_item-left">
-            <button class="menu" @click="menuButton"></button>
-            <ul class="menu_item" v-if="open">
-                <li class="item1">Home</li>
-                <li class="item2">Registration</li>
-                <li class="item3">Login</li>
-            </ul>
-            <h1 class="name">Rese</h1>
-        </div>
+        <Header />
         <div class="header_item-right">
             <form class="search_form">
                 <select class="search_area">
@@ -86,39 +68,15 @@ const menuButton = () => {
     margin-left: 120px;
     align-items: center;
 }
-.header_item-left{
-    display: flex;
-    margin-left: 10px;
-}
-.menu{
-    width: 30px;
-    height: 30px;
-    margin-top: 28px;
-}
-.menu_item {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    position: fixed;
-    top: 60px;
-    left: 0;
-    background-color: white;
-    list-style: none;
-    color: royalblue;
-}
-.item1, .item2, .item3{
-    margin-bottom: 20px;
-}
-.name{
-    margin-left: 20px;
-    color: royalblue;
-}
+
 .search_form{
     display: flex;
     height: 30px;
     width: 250px;
     padding-right: 100px;
 }
+
+/* main */
 .shop-list{
     display: flex;
     flex-wrap: wrap;
@@ -154,7 +112,7 @@ const menuButton = () => {
 }
 .link-button{
     color: white;
-    background-color: royalblue;
+    background-color: #305DFF;
     font-size: 12px;
     border-radius: 5px;
     margin: 5px;
