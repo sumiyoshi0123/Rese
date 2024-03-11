@@ -10,25 +10,31 @@ const time = ref('')
 const number = ref('')
 const router = useRouter();
 
-onMounted(async () => {
-    const json = await axios.get("http://localhost/api/detail/{id}");
+const fetchShops = (async () => {
+    const json = await axios.get("http://localhost/api/shop/1");
     const data = json.data;
     shop.value = data.data;
+    console.log(data);
 });
 
+onMounted(async () => {
+    (fetchShops());
+})
 //const prevは何をする機能？
 
 </script>
 
 <template>
     <Header />
-    <main>
+    <main class="detail_index">
         <div class="shop_data">
-            <button class="prev" @click="prev()"> ＜ </button>
-            <div class="shop_name">{{ shop.name }}</div>
-            <div class="shop_img">{{ shop.img_url }}</div>
-            <div class="shop_tag">#{{ shop.area }}#{{ shop.category }}</div>
-            <div class="shop_detail">{{ shop.detail }}</div>
+            <div class="shop_data-item">
+                <button class="prev" @click="prev()"> ＜ </button>
+                <div class="data_item-name">{{ shop.name }}</div>
+            </div>
+            <img class="data_image" :src="shop.img_url" alt="Image" />
+            <div class="data_tag">#{{ shop.area }}#{{ shop.category }}</div>
+            <div class="data_detail">{{ shop.detail }}</div>
         </div>
         <div class="reserve_form">
             <div class="form_title">予約</div>
@@ -78,12 +84,34 @@ onMounted(async () => {
 </template>
 
 <style>
+.detail_index{
+    display: flex;
+}
 .shop_data{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.shop_data-item{
+    display: flex;
+}
+.data_item-name{
+    margin-left: 10px;
+    font-size: large;
+    font-weight: bold;
+}
+.data_image{
+    width: 80%;
+    margin-top: 20px;
+}
+.data_tag{
     display: inline-block;
+    margin: 20px 0px;
+}
+.data_detail{
+    width: 80%;
 }
 .reserve_form{
-    display: inline-block;
-    margin-left: 600px;
     width: 30%;
     background-color: #305DFF;
 }
@@ -128,8 +156,9 @@ onMounted(async () => {
 }
 .reserve_button{
     width: 100%;
-    margin-top: 100px;
+    padding: 10px;
+    margin-top: 250px;
     color: white;
-    background-color: 	#0538FF;
+    background-color: #0538FF;
 }
 </style>

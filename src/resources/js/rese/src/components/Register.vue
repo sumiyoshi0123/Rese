@@ -29,17 +29,17 @@ const register = async () => {
                 <div class="form_item-name">
                     <div class="name-img">
                     </div>
-                    <input type="text" class="item-name" placeholder="Username">
+                    <input type="text" v-model="name" class="item-name" placeholder="Username">
                 </div>
                 <div class="form_item-email">
                     <div class="email-img">
                     </div>
-                    <input type="text" class="item-email" placeholder="Email">
+                    <input type="text" v-model="email" class="item-email" placeholder="Email">
                 </div>
                 <div class="form_item-pass">
                     <div class="pass-img">
                     </div>
-                    <input type="text" class="item-pass" placeholder="Password">
+                    <input type="text" class="item-pass" v-model="password" placeholder="Password">
                 </div>
                 <button class="from_item-button" @click="register()">登録</button>
             </div>

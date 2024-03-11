@@ -28,8 +28,8 @@ const login = async () => {
         <div class="login_form">
             <div class="login_form-title">Login</div>
             <div class="form_item">
-                <input type="text" class="item-email" placeholder="Email">
-                <input type="text" class="item-pass" placeholder="Password">
+                <input type="text" class="item-email" v-model="email" placeholder="Email">
+                <input type="text" class="item-pass" v-model="password" placeholder="Password">
                 <button class="from_item-button"  @click="login()">ログイン</button>
             </div>
         </div>

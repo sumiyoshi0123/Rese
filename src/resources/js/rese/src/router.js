@@ -8,15 +8,15 @@ import My_page from './components/My_page.vue';
 
 const routes = [
     {
-        path: "/",
+        path: "/shop",
         name: "shop_all",
         component: Shop_all
     },
     {
-        path: "/detail/{id}",
+        path: "/shop/:id",
         name: "detail",
         component: Detail,
-        props: true // パラメータをコンポーネントのプロパティとして渡すために必要
+        // props: true // パラメータをコンポーネントのプロパティとして渡すために必要
     },
     {
         path: "/login",

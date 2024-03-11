@@ -8,10 +8,15 @@ const shops = ref();
 const router = useRouter();
 
 onMounted(async () => {
-    const json = await axios.get("http://localhost/api/");
+    const json = await axios.get("http://localhost/api/shop");
     const data = json.data;
     shops.value = data.data;
 });
+
+//お気に入り登録機能
+const like = async() => {
+    const json = await axios.post('http://localhost/api/like');
+}
 
 </script>
 

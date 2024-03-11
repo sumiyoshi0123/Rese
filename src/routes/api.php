@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,9 @@ Route::post('/login', function (Request $request) {
     return response()->json(['error' => 'Unauthorized'], 401);
 });
 Route::middleware((['auth:sanctum']))->group(function () {
-    Route::apiResource('/', ShopController::class);
-    // Route::apiResource('/detail/{id}',[ShopController::class, 'show']);
-    Route::apiResource('/register', RegisterController::class);
+
 });
+
+Route::apiResource('/shop', ShopController::class);
+Route::apiResource('/register', RegisterController::class);
+Route::apiResource('/like', [LikeController::class, 'toggleLike']);

@@ -5,6 +5,10 @@ import Header from './Header.vue';
 
 const router = useRouter();
 
+//ログイン画面へ
+const login = () => {
+    router.push({ name: "login" });
+}
 </script>
 
 <template>
@@ -12,13 +16,14 @@ const router = useRouter();
     <main>
         <div class="thanks_item">
             <div class="item_message">会員登録ありがとうございます</div>
-            <button class="item_button" @click="login">ログインする</button>
+            <button class="item_button" @click="login()">ログインする</button>
         </div>
     </main>
 </template>
 
 <style>
 .thanks_item{
+    width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
