@@ -67,14 +67,18 @@ class LikeController extends Controller
     public function toggleLike(Shop $shop)
     {
         $user = Auth::user();
-        $like = Like::where('user_id',$user->id)->where('post_id', $shop->id)->first();
+        $like = Like::where('user_id',$user->id)
+            ->where('shop_id', $shop->id)->first();
 
         if ($like) {
             $like->delete();
+            return response()->json(['message' => 'Like Cancel']);
         } else {
-            Like::create(['shop_id' => $shop->id]);
+            Like::create([
+                'user_id' => $user->id,
+                'shop_id' => $shop->id,
+            ]);
+            return response()->json(['message' => 'Like Record']);
         }
-
-        return response()->json(['message' => 'Like toggled successfully']);
     }
 }
