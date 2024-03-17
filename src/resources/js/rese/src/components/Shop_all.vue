@@ -14,8 +14,11 @@ onMounted(async () => {
 });
 
 //お気に入り登録機能
-const like = async() => {
-    const json = await axios.post('http://localhost/api/like');
+const like = ref(true)
+
+const toggleLike = async () => {
+    like.value = !like.value
+    //const json = await axios.post('http://localhost/api/like');
 }
 
 </script>
@@ -58,7 +61,10 @@ const like = async() => {
                     <router-link :to="{ name: 'detail', params: { id: shop.id } }">
                         <button class="link-button">詳しくみる</button>
                     </router-link>
-                    <button class="like-button" @click="like()"></button>
+                    <button class="like-button" @click="toggleLike()">
+                        <img v-if="like" class="button_image" src="../heart/w_heart.png" alt="Image Button">
+                        <img v-else class="button_image" src="../heart/r_heart.png" alt="Image Button">
+                    </button>
                 </div>
             </div>
         </div>
@@ -124,5 +130,14 @@ const like = async() => {
 }
 .like-button{
     margin: 5px;
+    border: none;
+    background-color: white;
+}
+.button_image{
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    width: 30px;
 }
 </style>

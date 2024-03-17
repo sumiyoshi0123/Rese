@@ -21192,23 +21192,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     })));
 
     //お気に入り登録機能
-    var like = /*#__PURE__*/function () {
+    var like = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(true);
+    var toggleLike = /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var json;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost/api/like');
-            case 2:
-              json = _context2.sent;
-            case 3:
+              like.value = !like.value;
+              //const json = await axios.post('http://localhost/api/like');
+            case 1:
             case "end":
               return _context2.stop();
           }
         }, _callee2);
       }));
-      return function like() {
+      return function toggleLike() {
         return _ref3.apply(this, arguments);
       };
     }();
@@ -21216,6 +21214,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       shops: shops,
       router: router,
       like: like,
+      toggleLike: toggleLike,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       get axios() {
@@ -21620,6 +21619,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   render: () => (/* binding */ render)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _heart_w_heart_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../heart/w_heart.png */ "./resources/js/rese/src/heart/w_heart.png");
+/* harmony import */ var _heart_r_heart_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../heart/r_heart.png */ "./resources/js/rese/src/heart/r_heart.png");
+
+
 
 var _hoisted_1 = {
   "class": "header_item"
@@ -21650,6 +21653,18 @@ var _hoisted_10 = {
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "link-button"
 }, "詳しくみる", -1 /* HOISTED */);
+var _hoisted_12 = {
+  key: 0,
+  "class": "button_image",
+  src: _heart_w_heart_png__WEBPACK_IMPORTED_MODULE_1__["default"],
+  alt: "Image Button"
+};
+var _hoisted_13 = {
+  key: 1,
+  "class": "button_image",
+  src: _heart_r_heart_png__WEBPACK_IMPORTED_MODULE_2__["default"],
+  alt: "Image Button"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("header", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Header"]), _hoisted_2]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.shops, function (shop) {
@@ -21672,9 +21687,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       "class": "like-button",
       onClick: _cache[0] || (_cache[0] = function ($event) {
-        return $setup.like();
+        return $setup.toggleLike();
       })
-    })])]);
+    }, [$setup.like ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_12)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_13))])])]);
   }), 256 /* UNKEYED_FRAGMENT */))])])], 64 /* STABLE_FRAGMENT */);
 }
 
@@ -21906,7 +21921,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.header_item{\n    display: flex;\n    justify-content: space-between;\n    width: 1100px;\n    margin-left: 120px;\n    align-items: center;\n}\n.search_form{\n    display: flex;\n    height: 30px;\n    width: 250px;\n    padding-right: 100px;\n}\n\n/* main */\n.shop-list{\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    width: 1100px;\n    margin-left: 120px;\n}\n.shop-list_item{\n    width: 250px;\n    height: auto;\n    box-shadow: 2px 2px 10px 0px gray;\n    margin: 8px;\n    border-radius: 5px;\n    background-color: white;\n}\n.shop_image{\n    width: 250px;\n    height: auto;\n    border-radius: 5px 5px 0px 0px;\n}\n.list_item-name{\n    font-weight: bold;\n    margin: 5px;\n}\n.list_item-tag{\n    display: flex;\n    font-size: 12px;\n    margin: 5px;\n}\n.list_item-button{\n    display: flex;\n    justify-content: space-between;\n}\n.link-button{\n    color: white;\n    background-color: #305DFF;\n    font-size: 12px;\n    border-radius: 5px;\n    margin: 5px;\n}\n.like-button{\n    margin: 5px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.header_item{\n    display: flex;\n    justify-content: space-between;\n    width: 1100px;\n    margin-left: 120px;\n    align-items: center;\n}\n.search_form{\n    display: flex;\n    height: 30px;\n    width: 250px;\n    padding-right: 100px;\n}\n\n/* main */\n.shop-list{\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    width: 1100px;\n    margin-left: 120px;\n}\n.shop-list_item{\n    width: 250px;\n    height: auto;\n    box-shadow: 2px 2px 10px 0px gray;\n    margin: 8px;\n    border-radius: 5px;\n    background-color: white;\n}\n.shop_image{\n    width: 250px;\n    height: auto;\n    border-radius: 5px 5px 0px 0px;\n}\n.list_item-name{\n    font-weight: bold;\n    margin: 5px;\n}\n.list_item-tag{\n    display: flex;\n    font-size: 12px;\n    margin: 5px;\n}\n.list_item-button{\n    display: flex;\n    justify-content: space-between;\n}\n.link-button{\n    color: white;\n    background-color: #305DFF;\n    font-size: 12px;\n    border-radius: 5px;\n    margin: 5px;\n}\n.like-button{\n    margin: 5px;\n    border: none;\n    background-color: white;\n}\n.button_image{\n    border: none;\n    padding: 0;\n    background: none;\n    cursor: pointer;\n    width: 30px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -22010,6 +22025,36 @@ module.exports = function (cssWithMappingToString) {
 
   return list;
 };
+
+/***/ }),
+
+/***/ "./resources/js/rese/src/heart/r_heart.png":
+/*!*************************************************!*\
+  !*** ./resources/js/rese/src/heart/r_heart.png ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/r_heart.png?f7ba179605dbecd9d000ab12220400d2");
+
+/***/ }),
+
+/***/ "./resources/js/rese/src/heart/w_heart.png":
+/*!*************************************************!*\
+  !*** ./resources/js/rese/src/heart/w_heart.png ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/w_heart.png?280a6de8f3b2ffcd66ce41769c5e6bad");
 
 /***/ }),
 
