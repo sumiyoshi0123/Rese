@@ -20783,6 +20783,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var __expose = _ref.expose;
     __expose();
     var shop = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
+    var shopId = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     var date = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     var time = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     var number = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
@@ -20794,7 +20795,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://localhost/api/shop/1");
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://localhost/api/shop/", {
+                params: {
+                  shopId: shopId.value
+                }
+              });
             case 2:
               json = _context.sent;
               data = json.data;
@@ -20825,6 +20830,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var __returned__ = {
       shop: shop,
+      shopId: shopId,
       date: date,
       time: time,
       number: number,
@@ -21172,6 +21178,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var __expose = _ref.expose;
     __expose();
     var shops = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
+    var shopId = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
     var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       var json, data;
@@ -21195,12 +21202,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var like = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(true);
     var toggleLike = /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var json;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               like.value = !like.value;
-              //const json = await axios.post('http://localhost/api/like');
-            case 1:
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost/api/like', {
+                params: {
+                  shopId: shopId.value
+                }
+              });
+            case 3:
+              json = _context2.sent;
+              console.log(json);
+            case 5:
             case "end":
               return _context2.stop();
           }
@@ -21212,6 +21228,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }();
     var __returned__ = {
       shops: shops,
+      shopId: shopId,
       router: router,
       like: like,
       toggleLike: toggleLike,
@@ -27398,6 +27415,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var token = localStorage.getItem("token");
+(axios__WEBPACK_IMPORTED_MODULE_2___default().defaults).headers.common["Authorization"] = "Bearer ".concat(token);
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)(_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]).use(_router__WEBPACK_IMPORTED_MODULE_3__["default"]).mount('#app');
 })();
 

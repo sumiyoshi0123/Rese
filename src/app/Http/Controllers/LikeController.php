@@ -64,11 +64,11 @@ class LikeController extends Controller
         //
     }
 
-    public function toggleLike(Shop $shop)
+    public function toggleLike(Request $request)
     {
         $user = Auth::user();
         $like = Like::where('user_id',$user->id)
-            ->where('shop_id', $shop->id)->first();
+            ->where('shop_id', $request->shop_id)->first();
 
         if ($like) {
             $like->delete();
@@ -76,7 +76,7 @@ class LikeController extends Controller
         } else {
             Like::create([
                 'user_id' => $user->id,
-                'shop_id' => $shop->id,
+                'shop_id' => $request->shop_id,
             ]);
             return response()->json(['message' => 'Like Record']);
         }

@@ -5,13 +5,18 @@ import { useRouter } from "vue-router";
 import Header from './Header.vue';
 
 const shop = ref([])
+const shopId = ref('')
 const date = ref('')
 const time = ref('')
 const number = ref('')
 const router = useRouter();
 
 const fetchShops = (async () => {
-    const json = await axios.get("http://localhost/api/shop/1");
+    const json = await axios.get("http://localhost/api/shop/", {
+        params: {
+            shopId: shopId.value
+        }
+    });
     const data = json.data;
     shop.value = data.data;
     console.log(data);

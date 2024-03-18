@@ -4,8 +4,9 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import Header from './Header.vue';
 
-const shops = ref();
-const router = useRouter();
+const shops = ref()
+const shopId = ref('')
+const router = useRouter()
 
 onMounted(async () => {
     const json = await axios.get("http://localhost/api/shop");
@@ -18,7 +19,12 @@ const like = ref(true)
 
 const toggleLike = async () => {
     like.value = !like.value
-    //const json = await axios.post('http://localhost/api/like');
+    const json = await axios.post('http://localhost/api/like', {
+        params: {
+            shopId: shopId.value
+        }
+    });
+    console.log(json)
 }
 
 </script>
