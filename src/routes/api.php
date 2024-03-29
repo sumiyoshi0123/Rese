@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReserveController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +35,8 @@ Route::post('/login', function (Request $request) {
     return response()->json(['error' => 'Unauthorized'], 401);
 });
 Route::middleware((['auth:sanctum']))->group(function () {
-    Route::post('/like', [LikeController::class, 'toggleLike']);
+    Route::post('/like/', [LikeController::class, 'toggleLike']);
+    Route::post('/reserve/', ReserveController::class);
 });
 
 Route::apiResource('/shop', ShopController::class);

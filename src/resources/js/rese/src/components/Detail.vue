@@ -12,20 +12,20 @@ const number = ref('')
 const router = useRouter();
 
 const fetchShops = (async () => {
-    const json = await axios.get("http://localhost/api/shop/", {
-        params: {
-            shopId: shopId.value
-        }
-    });
+    const json = await axios.get("http://localhost/api/shop/1");
     const data = json.data;
     shop.value = data.data;
-    console.log(data);
+    console.log(json);
 });
 
 onMounted(async () => {
     (fetchShops());
 })
-//const prevは何をする機能？
+
+//
+const reserve = async () => {
+    const jason = await axios.post("http://localhost/api/reserve/");
+}
 
 </script>
 
@@ -83,7 +83,7 @@ onMounted(async () => {
                     </tr>
                 </table>
             </div>
-            <button type="button" class="reserve_button" @click="submit">予約する</button>
+            <button class="reserve_button" @click="reserve()">予約する</button>
         </div>
     </main>
 </template>

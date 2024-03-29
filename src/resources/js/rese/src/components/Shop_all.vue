@@ -3,9 +3,9 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import Header from './Header.vue';
+import Detail from "./Detail.vue";
 
 const shops = ref()
-const shopId = ref('')
 const router = useRouter()
 
 onMounted(async () => {
@@ -17,12 +17,10 @@ onMounted(async () => {
 //お気に入り登録機能
 const like = ref(true)
 
-const toggleLike = async () => {
+const toggleLike = async (shop_id) => {
     like.value = !like.value
     const json = await axios.post('http://localhost/api/like', {
-        params: {
-            shopId: shopId.value
-        }
+            shop_id: shop_id
     });
     console.log(json)
 }
@@ -67,7 +65,7 @@ const toggleLike = async () => {
                     <router-link :to="{ name: 'detail', params: { id: shop.id } }">
                         <button class="link-button">詳しくみる</button>
                     </router-link>
-                    <button class="like-button" @click="toggleLike()">
+                    <button class="like-button" @click="toggleLike(shop.id)">
                         <img v-if="like" class="button_image" src="../heart/w_heart.png" alt="Image Button">
                         <img v-else class="button_image" src="../heart/r_heart.png" alt="Image Button">
                     </button>
