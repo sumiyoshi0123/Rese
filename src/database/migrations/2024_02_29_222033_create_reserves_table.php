@@ -19,7 +19,7 @@ class CreateReservesTable extends Migration
             $table->foreignId('shop_id')->constrained('shops');
             $table->date('date');
             $table->time('time');
-            $table->integer('number');
+            $table->string('number');
             $table->timestamps();
         });
     }

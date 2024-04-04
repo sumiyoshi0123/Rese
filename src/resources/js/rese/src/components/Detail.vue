@@ -1,30 +1,41 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import Header from './Header.vue';
 
-const shop = ref([])
-const shopId = ref('')
+const shop = ref('')
 const date = ref('')
 const time = ref('')
 const number = ref('')
 const router = useRouter();
+const route = useRoute();
 
-const fetchShops = (async () => {
-    const json = await axios.get("http://localhost/api/shop/1");
-    const data = json.data;
-    shop.value = data.data;
-    console.log(json);
-});
 
 onMounted(async () => {
-    (fetchShops());
-})
+    const id = route.params.id;
+    const json = await axios.get('http://localhost/api/shop/');
+    const data = json.data.data;
+    // 特定のIDに対応するデータのみを取得する
+    const item = data.find(item => item.id == id);
+    shop.value = item;
+    console.log(item)
+});
 
-//
-const reserve = async () => {
-    const jason = await axios.post("http://localhost/api/reserve/");
+//shop_all.vueに戻る
+const prev = () => {
+    router.push({ name: "shop_all"})
+}
+
+//予約機能
+const reserve = async (shop_id) => {
+    const json = await axios.post("http://localhost/api/reserve/", {
+        shop_id: shop_id,
+        date: date.value,
+        time: time.value,
+        number: number.value,
+    });
+    router.push({ name: "done"})
 }
 
 </script>
@@ -83,7 +94,7 @@ const reserve = async () => {
                     </tr>
                 </table>
             </div>
-            <button class="reserve_button" @click="reserve()">予約する</button>
+            <button class="reserve_button" @click="reserve(shop.id)">予約する</button>
         </div>
     </main>
 </template>

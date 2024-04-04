@@ -3,7 +3,6 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import Header from './Header.vue';
-import Detail from "./Detail.vue";
 
 const shops = ref()
 const router = useRouter()
@@ -13,6 +12,11 @@ onMounted(async () => {
     const data = json.data;
     shops.value = data.data;
 });
+
+//Detail.vueへ
+const goToDetail = (shopId) => {
+    router.push({ name: 'detail', params: { id: shopId } });
+};
 
 //お気に入り登録機能
 const like = ref(true)
@@ -52,7 +56,7 @@ const toggleLike = async (shop_id) => {
     </header>
     <main>
         <div class="shop-list">
-            <div class="shop-list_item" v-for="shop in shops">
+            <div class="shop-list_item" v-for="shop in shops" :key="shop.id">
                 <div>
                     <img class="shop_image" :src="shop.img_url" alt="Image" />
                 </div>
@@ -61,10 +65,8 @@ const toggleLike = async (shop_id) => {
                     <div class="tag1">#{{ shop.area }}</div>
                     <div class="tag2">#{{ shop.category }}</div>
                 </div>
-                <div class="list_item-button">
-                    <router-link :to="{ name: 'detail', params: { id: shop.id } }">
-                        <button class="link-button">詳しくみる</button>
-                    </router-link>
+                <div class="list_item-button" >
+                        <button class="link-button" @click="goToDetail(shop.id)">詳しくみる</button>
                     <button class="like-button" @click="toggleLike(shop.id)">
                         <img v-if="like" class="button_image" src="../heart/w_heart.png" alt="Image Button">
                         <img v-else class="button_image" src="../heart/r_heart.png" alt="Image Button">

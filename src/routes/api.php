@@ -35,8 +35,9 @@ Route::post('/login', function (Request $request) {
     return response()->json(['error' => 'Unauthorized'], 401);
 });
 Route::middleware((['auth:sanctum']))->group(function () {
-    Route::post('/like/', [LikeController::class, 'toggleLike']);
-    Route::post('/reserve/', ReserveController::class);
+    Route::post('/like', [LikeController::class, 'toggleLike']);
+    Route::get('/like', [LikeController::class, 'index']);
+    Route::apiResource('/reserve', ReserveController::class);
 });
 
 Route::apiResource('/shop', ShopController::class);

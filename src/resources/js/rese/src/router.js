@@ -5,6 +5,7 @@ import Login from './components/Login.vue';
 import Register from './components/Register.vue';
 import Thanks from './components/Thanks.vue';
 import My_page from './components/My_page.vue';
+import Done from './components/Done.vue';
 
 const routes = [
     {
@@ -16,7 +17,6 @@ const routes = [
         path: "/shop/:id",
         name: "detail",
         component: Detail,
-        // props: true // パラメータをコンポーネントのプロパティとして渡すために必要
     },
     {
         path: "/login",
@@ -37,6 +37,11 @@ const routes = [
         path: "/my_page",
         name: "my_page",
         component: My_page
+    },
+    {
+        path: "/done",
+        name: "done",
+        component: Done
     }
 ];
 

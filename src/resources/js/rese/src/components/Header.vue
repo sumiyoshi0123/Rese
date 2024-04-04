@@ -25,6 +25,17 @@ const register = () => {
 const login = () => {
     router.push({ name: "login" });
 }
+
+//ログアウト
+const logout = async () => {
+    localStorage.removeItem('token');
+    router.push({ name: "login" });
+}
+
+//マイページ画面へ
+const myPage = () => {
+    router.pash({ name: "my_page "})
+}
 </script>
 
 <template>
@@ -34,6 +45,8 @@ const login = () => {
             <li class="item1" @click="home">Home</li>
             <li class="item2" @click="register">Registration</li>
             <li class="item3" @click="login">Login</li>
+            <li class="item4" @click="logout">Logout</li>
+            <li class="item5" @click="myPage">Mypage</li>
             </ul>
         <h1 class="name">Rese</h1>
     </div>
@@ -61,7 +74,7 @@ const login = () => {
     list-style: none;
     color: #305DFF;
 }
-.item1, .item2, .item3{
+.item1, .item2, .item3, .item4, .item5{
     margin-bottom: 20px;
 }
 .name{

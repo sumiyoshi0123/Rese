@@ -5,9 +5,9 @@ import Header from './Header.vue';
 
 const router = useRouter();
 
-//ログイン画面へ
-const login = () => {
-    router.push({ name: "login" });
+//ホーム画面へ
+const back = () => {
+    router.push({ name: "shop_all" });
 }
 </script>
 
@@ -15,8 +15,8 @@ const login = () => {
     <Header />
     <main>
         <div class="thanks_item">
-            <div class="item_message">会員登録ありがとうございます</div>
-            <button class="item_button" @click="login()">ログインする</button>
+            <div class="item_message">ご予約ありがとうございます</div>
+            <button class="item_button" @click="back()">戻る</button>
         </div>
     </main>
 </template>
@@ -27,18 +27,11 @@ const login = () => {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     background-color: white;
     box-shadow: 2px 2px 10px 0px gray;
     border-radius: 5px;
 }
-.item_message{
-    height: 60px;
-    margin-top: 50px;
-}
 .item_button{
-    width: 36%;
-    margin-bottom: 50px;
     color: white;
     background-color: #305DFF;
 }

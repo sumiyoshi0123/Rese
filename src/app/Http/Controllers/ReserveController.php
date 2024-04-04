@@ -15,7 +15,12 @@ class ReserveController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $reserve = Reserve::where('user_id', $user->id)->first();
+
+        return response()->json([
+            'reserve' => $reserve
+        ]);
     }
 
     /**
@@ -28,6 +33,17 @@ class ReserveController extends Controller
     {
         $user = Auth::user();
 
+        $reserve = [
+            'user_id' => $user->id,
+            'shop_id' => $request->shop_id,
+            'date' => $request->date,
+            'time' => $request->time,
+            'number' => $request->number,
+        ];
+        Reserve::create($reserve);
+        return response()->json([
+            "message" => "Successfully    reserved" //予約完了
+        ], 201);
     }
 
     /**
@@ -61,6 +77,19 @@ class ReserveController extends Controller
      */
     public function destroy(Reserve $reserve)
     {
-        //
+        $user = Auth::user();
+
+        $reserve = Reserve::where('user_id', $user->id)->where('shop_id', $reserve->shop_id)->first();
+
+        if ($reserve) {
+            $reserve->delete();
+            return response()->json([
+                'message' => 'Reserve deleted successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Reserve not found'
+            ], 404);
+        }
     }
 }
