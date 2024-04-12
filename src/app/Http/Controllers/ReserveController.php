@@ -16,7 +16,8 @@ class ReserveController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $reserve = Reserve::where('user_id', $user->id)->first();
+        $reserve = Reserve::where('user_id', $user->id)->with('shop')->first();
+        //ログインしているユーザーの予約情報とshopのデータを一緒に取得する
 
         return response()->json([
             'reserve' => $reserve
@@ -75,11 +76,11 @@ class ReserveController extends Controller
      * @param  \App\Models\Reserve  $reserve
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Reserve $reserve)
+    public function destroy(Request $request)
     {
         $user = Auth::user();
 
-        $reserve = Reserve::where('user_id', $user->id)->where('shop_id', $reserve->shop_id)->first();
+        $reserve = Reserve::where('user_id', $user->id)->first();
 
         if ($reserve) {
             $reserve->delete();

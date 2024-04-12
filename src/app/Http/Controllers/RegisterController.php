@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +18,7 @@ class RegisterController extends Controller
     {
         $user = Auth::user();
 
-        $loginName = User::where('name', $user->name)->first();
+        $loginName = User::where('name', $user->name)->get('name');
 
         return response()->json([
             'loginName' => $loginName
@@ -32,7 +31,7 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RegisterRequest $request)
+    public function store(Request $request)
     {
         $user = [
             'name' => $request->name,

@@ -8,18 +8,23 @@ const shop = ref('')
 const date = ref('')
 const time = ref('')
 const number = ref('')
+const options = [
+    { value: '1', text: '1人' },
+    { value: '2', text: '2人' },
+    { value: '3', text: '3人' },
+    { value: '4', text: '4人' },
+    { value: '5', text: '5人' }
+];
+// value は実際の値、text はオプションの表示テキスト
+
 const router = useRouter();
 const route = useRoute();
 
 
 onMounted(async () => {
     const id = route.params.id;
-    const json = await axios.get('http://localhost/api/shop/');
-    const data = json.data.data;
-    // 特定のIDに対応するデータのみを取得する
-    const item = data.find(item => item.id == id);
-    shop.value = item;
-    console.log(item)
+    const json = await axios.get(`http://localhost/api/shop/${id}`);
+    shop.value = json.data.data;
 });
 
 //shop_all.vueに戻る
@@ -67,11 +72,7 @@ const reserve = async (shop_id) => {
                 </select>
                 <select class="reserve_number" v-model="number">
                     <option disabled value="">予約人数</option>
-                    <option>1人</option>
-                    <option>2人</option>
-                    <option>3人</option>
-                    <option>4人</option>
-                    <option>5人</option>
+                    <option v-for="option in options" :key="option.value" :value="option.value">{{ option.text }}</option>
                 </select>
             </div>
             <div class="reserve_data">
@@ -90,7 +91,8 @@ const reserve = async (shop_id) => {
                     </tr>
                     <tr>
                         <th>Number</th>
-                        <td class="item">{{ number }}</td>
+                        <td class="item">{{ number ? number + '人' : '' }}</td>
+                        <!-- 三項演算子で選択された値に’人’を追加し、選択されていない場合は何も表示しない -->
                     </tr>
                 </table>
             </div>

@@ -34,7 +34,7 @@ const logout = async () => {
 
 //マイページ画面へ
 const myPage = () => {
-    router.pash({ name: "my_page "})
+    router.push({ name: "my_page" });
 }
 </script>
 

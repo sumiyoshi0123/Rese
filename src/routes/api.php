@@ -38,7 +38,8 @@ Route::middleware((['auth:sanctum']))->group(function () {
     Route::post('/like', [LikeController::class, 'toggleLike']);
     Route::get('/like', [LikeController::class, 'index']);
     Route::apiResource('/reserve', ReserveController::class);
+    Route::apiResource('/register', RegisterController::class);
 });
 
 Route::apiResource('/shop', ShopController::class);
-Route::apiResource('/register', RegisterController::class);
+//Route::apiResource('/register', RegisterController::class);

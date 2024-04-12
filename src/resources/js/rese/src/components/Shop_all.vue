@@ -26,7 +26,6 @@ const toggleLike = async (shop_id) => {
     const json = await axios.post('http://localhost/api/like', {
             shop_id: shop_id
     });
-    console.log(json)
 }
 
 </script>
