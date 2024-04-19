@@ -104,9 +104,8 @@ const goToDetail = (shopId) => {
                         </div>
                         <div class="list_item-button" >
                                 <button class="link-button" @click="goToDetail(shop.id)">詳しくみる</button>
-                            <button class="like-button" @click="toggleLike(shop.id)">
-                                <img v-if="like" class="button_image" src="../heart/w_heart.png" alt="Image Button">
-                                <img v-else class="button_image" src="../heart/r_heart.png" alt="Image Button">
+                            <button class="like-button" @click="deleteLike(shop.id)">
+                                <img class="button_image" src="../heart/r_heart.png" alt="Image Button">
                             </button>
                         </div>
                     </div>
@@ -143,6 +142,7 @@ const goToDetail = (shopId) => {
 }
 .like_list{
     display: flex;
+    flex-wrap: wrap;
 }
 .shop-list_item{
     width: 250px;

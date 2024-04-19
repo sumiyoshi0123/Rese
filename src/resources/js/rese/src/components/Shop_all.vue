@@ -19,13 +19,28 @@ const goToDetail = (shopId) => {
 };
 
 //お気に入り登録機能
-const like = ref(true)
+const like = ref({});
 
 const toggleLike = async (shop_id) => {
-    like.value = !like.value
-    const json = await axios.post('http://localhost/api/like', {
-            shop_id: shop_id
-    });
+    const shop = shops.value.find(s => s.id === shop_id);
+    //shops配列の中からidが指定されたshop_idと一致する要素を探す
+
+    if (shop) {
+    //特定のshop_idに対応するショップがshops配列内で見つかった場合
+
+        const newLikeState = !shop.like;
+        //shop.likeがtrueであればfalseに、falseであればtrue
+
+        shop.like = newLikeState;
+        //shopオブジェクトのlikeプロパティに新しい状態を代入して特定のショップのお気に入りの状態を更新
+
+        const json = await axios.post('http://localhost/api/like', {
+            shop_id: shop_id,
+            like: newLikeState
+        });
+        //更新されたお気に入りの状態をサーバーに送信
+
+    }
 }
 
 </script>
@@ -67,8 +82,8 @@ const toggleLike = async (shop_id) => {
                 <div class="list_item-button" >
                         <button class="link-button" @click="goToDetail(shop.id)">詳しくみる</button>
                     <button class="like-button" @click="toggleLike(shop.id)">
-                        <img v-if="like" class="button_image" src="../heart/w_heart.png" alt="Image Button">
-                        <img v-else class="button_image" src="../heart/r_heart.png" alt="Image Button">
+                        <img v-if="shop.like" class="button_image" src="../heart/r_heart.png" alt="Image Button">
+                        <img v-else class="button_image" src="../heart/w_heart.png" alt="Image Button">
                     </button>
                 </div>
             </div>

@@ -76,10 +76,9 @@ class ReserveController extends Controller
      * @param  \App\Models\Reserve  $reserve
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Reserve $reserve)
     {
         $user = Auth::user();
-
         $reserve = Reserve::where('user_id', $user->id)->first();
 
         if ($reserve) {

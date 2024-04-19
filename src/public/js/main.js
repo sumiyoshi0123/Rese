@@ -21463,21 +21463,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
 
     //お気に入り登録機能
-    var like = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(true);
+    var like = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({});
     var toggleLike = /*#__PURE__*/function () {
       var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(shop_id) {
-        var json;
+        var shop, newLikeState, json;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              like.value = !like.value;
-              _context2.next = 3;
+              shop = shops.value.find(function (s) {
+                return s.id === shop_id;
+              }); //shops配列の中からidが指定されたshop_idと一致する要素を探す
+              if (!shop) {
+                _context2.next = 7;
+                break;
+              }
+              //特定のshop_idに対応するショップがshops配列内で見つかった場合
+              newLikeState = !shop.like; //shop.likeがtrueであればfalseに、falseであればtrue
+              shop.like = newLikeState;
+              //shopオブジェクトのlikeプロパティに新しい状態を代入して特定のショップのお気に入りの状態を更新
+              _context2.next = 6;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost/api/like', {
-                shop_id: shop_id
+                shop_id: shop_id,
+                like: newLikeState
               });
-            case 3:
+            case 6:
               json = _context2.sent;
-            case 4:
+            case 7:
             case "end":
               return _context2.stop();
           }
@@ -21841,9 +21852,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   render: () => (/* binding */ render)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _heart_w_heart_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../heart/w_heart.png */ "./resources/js/rese/src/heart/w_heart.png");
-/* harmony import */ var _heart_r_heart_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../heart/r_heart.png */ "./resources/js/rese/src/heart/r_heart.png");
-
+/* harmony import */ var _heart_r_heart_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../heart/r_heart.png */ "./resources/js/rese/src/heart/r_heart.png");
 
 
 var _hoisted_1 = {
@@ -21912,18 +21921,12 @@ var _hoisted_25 = {
 var _hoisted_26 = {
   "class": "list_item-button"
 };
-var _hoisted_27 = {
-  key: 0,
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   "class": "button_image",
-  src: _heart_w_heart_png__WEBPACK_IMPORTED_MODULE_1__["default"],
+  src: _heart_r_heart_png__WEBPACK_IMPORTED_MODULE_1__["default"],
   alt: "Image Button"
-};
-var _hoisted_28 = {
-  key: 1,
-  "class": "button_image",
-  src: _heart_r_heart_png__WEBPACK_IMPORTED_MODULE_2__["default"],
-  alt: "Image Button"
-};
+}, null, -1 /* HOISTED */);
+var _hoisted_28 = [_hoisted_27];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Header"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.user) + "さん", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "reserve_delete",
@@ -21946,9 +21949,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, "詳しくみる"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       "class": "like-button",
       onClick: _cache[2] || (_cache[2] = function ($event) {
-        return _ctx.toggleLike($setup.shop.id);
+        return _ctx.deleteLike($setup.shop.id);
       })
-    }, [like ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_27)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_28))])])]);
+    }, [].concat(_hoisted_28))])]);
   }), 128 /* KEYED_FRAGMENT */))])])])])], 64 /* STABLE_FRAGMENT */);
 }
 
@@ -22038,8 +22041,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   render: () => (/* binding */ render)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _heart_w_heart_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../heart/w_heart.png */ "./resources/js/rese/src/heart/w_heart.png");
-/* harmony import */ var _heart_r_heart_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../heart/r_heart.png */ "./resources/js/rese/src/heart/r_heart.png");
+/* harmony import */ var _heart_r_heart_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../heart/r_heart.png */ "./resources/js/rese/src/heart/r_heart.png");
+/* harmony import */ var _heart_w_heart_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../heart/w_heart.png */ "./resources/js/rese/src/heart/w_heart.png");
 
 
 
@@ -22071,13 +22074,13 @@ var _hoisted_11 = ["onClick"];
 var _hoisted_12 = {
   key: 0,
   "class": "button_image",
-  src: _heart_w_heart_png__WEBPACK_IMPORTED_MODULE_1__["default"],
+  src: _heart_r_heart_png__WEBPACK_IMPORTED_MODULE_1__["default"],
   alt: "Image Button"
 };
 var _hoisted_13 = {
   key: 1,
   "class": "button_image",
-  src: _heart_r_heart_png__WEBPACK_IMPORTED_MODULE_2__["default"],
+  src: _heart_w_heart_png__WEBPACK_IMPORTED_MODULE_2__["default"],
   alt: "Image Button"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -22099,7 +22102,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       onClick: function onClick($event) {
         return $setup.toggleLike(shop.id);
       }
-    }, [$setup.like ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_12)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_13))], 8 /* PROPS */, _hoisted_11)])]);
+    }, [shop.like ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_12)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_13))], 8 /* PROPS */, _hoisted_11)])]);
   }), 128 /* KEYED_FRAGMENT */))])])], 64 /* STABLE_FRAGMENT */);
 }
 
@@ -22336,7 +22339,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.user_item{\n    display: flex;\n}\n.reserve_items{\n    width: 60%;\n}\n.reserve_delete{\n    width: 20px;\n    height: 20px;\n}\n.reserve_menu{\n    display: flex;\n    align-items: center;\n}\n.like_data{\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    width: 1100px;\n    margin-left: 120px;\n}\n.like_list{\n    display: flex;\n}\n.shop-list_item{\n    width: 250px;\n    height: auto;\n    box-shadow: 2px 2px 10px 0px gray;\n    margin: 8px;\n    border-radius: 5px;\n    background-color: white;\n}\n.shop_image{\n    width: 250px;\n    height: auto;\n    border-radius: 5px 5px 0px 0px;\n}\n.list_item-name{\n    font-weight: bold;\n    margin: 5px;\n}\n.list_item-tag{\n    display: flex;\n    font-size: 12px;\n    margin: 5px;\n}\n.list_item-button{\n    display: flex;\n    justify-content: space-between;\n}\n.link-button{\n    color: white;\n    background-color: #305DFF;\n    font-size: 12px;\n    border-radius: 5px;\n    margin: 5px;\n}\n.like-button{\n    margin: 5px;\n    border: none;\n    background-color: white;\n}\n.button_image{\n    border: none;\n    padding: 0;\n    background: none;\n    cursor: pointer;\n    width: 30px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.user_item{\n    display: flex;\n}\n.reserve_items{\n    width: 60%;\n}\n.reserve_delete{\n    width: 20px;\n    height: 20px;\n}\n.reserve_menu{\n    display: flex;\n    align-items: center;\n}\n.like_data{\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    width: 1100px;\n    margin-left: 120px;\n}\n.like_list{\n    display: flex;\n    flex-wrap: wrap;\n}\n.shop-list_item{\n    width: 250px;\n    height: auto;\n    box-shadow: 2px 2px 10px 0px gray;\n    margin: 8px;\n    border-radius: 5px;\n    background-color: white;\n}\n.shop_image{\n    width: 250px;\n    height: auto;\n    border-radius: 5px 5px 0px 0px;\n}\n.list_item-name{\n    font-weight: bold;\n    margin: 5px;\n}\n.list_item-tag{\n    display: flex;\n    font-size: 12px;\n    margin: 5px;\n}\n.list_item-button{\n    display: flex;\n    justify-content: space-between;\n}\n.link-button{\n    color: white;\n    background-color: #305DFF;\n    font-size: 12px;\n    border-radius: 5px;\n    margin: 5px;\n}\n.like-button{\n    margin: 5px;\n    border: none;\n    background-color: white;\n}\n.button_image{\n    border: none;\n    padding: 0;\n    background: none;\n    cursor: pointer;\n    width: 30px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
