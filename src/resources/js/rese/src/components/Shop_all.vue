@@ -11,6 +11,26 @@ onMounted(async () => {
     const json = await axios.get("http://localhost/api/shop");
     const data = json.data;
     shops.value = data.data;
+
+    const likeShops = await axios.get("http://localhost/api/like");
+    const like = likeShops.data.like;
+
+    // ログインユーザーのお気に入り情報をshops配列に反映する
+    shops.value.forEach(shop => {
+        // ログインユーザーのお気に入りに含まれているかを判定するフラグ
+        let isLiked = false;
+
+        // like配列内の各オブジェクトのshop_idと比較して、お気に入りに含まれているかを判定する
+        like.forEach(item => {
+            if (item.shop_id === shop.id) {
+                isLiked = true;
+            }
+        });
+
+        // お気に入りに含まれている場合、shop.likeをtrueに設定する
+        shop.like = isLiked;
+        console.log(shop.like);
+    });
 });
 
 //Detail.vueへ

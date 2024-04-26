@@ -33,7 +33,7 @@ const fetchReserve = async () => {
 const fetchLike = async () => {
     const json = await axios.get("http://localhost/api/like")
     likes.value = json.data.like;
-    console.log(json.data.like);
+    //console.log(likes.value);
 }
 
 // コンポーネントがマウントされた時にデータを取得
@@ -52,6 +52,20 @@ const cancel = async () => {
 //Detail.vueへ
 const goToDetail = (shopId) => {
     router.push({ name: 'detail', params: { id: shopId } });
+};
+
+//お気に入り削除機能
+const like = ({});
+const likeId = like.id;
+const deleteLike = async (likeId) => {
+    try {
+        // サーバーにDELETEリクエストを送信してお気に入りを削除
+        await axios.delete(`http://localhost/api/like/${likeId}`);
+        // 成功したらlikesの値を更新して再描画
+        await fetchLike();
+    } catch (error) {
+        console.error('Error deleting like:', error);
+    }
 };
 
 </script>
@@ -104,7 +118,7 @@ const goToDetail = (shopId) => {
                         </div>
                         <div class="list_item-button" >
                                 <button class="link-button" @click="goToDetail(shop.id)">詳しくみる</button>
-                            <button class="like-button" @click="deleteLike(shop.id)">
+                            <button class="like-button" @click="deleteLike(like.id)">
                                 <img class="button_image" src="../heart/r_heart.png" alt="Image Button">
                             </button>
                         </div>

@@ -66,7 +66,19 @@ class LikeController extends Controller
      */
     public function destroy(like $like)
     {
-        //
+        $user = Auth::user();
+        $like = Like::where('user_id', $user->id)->first();
+
+        if ($like) {
+            $like->delete();
+            return response()->json([
+                'message' => 'Like deleted successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Like not found'
+            ], 404);
+        }
     }
 
     public function toggleLike(Request $request)

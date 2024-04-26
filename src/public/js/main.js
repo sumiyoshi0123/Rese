@@ -21236,8 +21236,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 2:
               json = _context3.sent;
               likes.value = json.data.like;
-              console.log(json.data.like);
-            case 5:
+              //console.log(likes.value);
+            case 4:
             case "end":
               return _context3.stop();
           }
@@ -21287,6 +21287,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       });
     };
+
+    //お気に入り削除機能
+    var like = {};
+    var likeId = like.id;
+    var deleteLike = /*#__PURE__*/function () {
+      var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(likeId) {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.prev = 0;
+              _context5.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]("http://localhost/api/like/".concat(likeId));
+            case 3:
+              _context5.next = 5;
+              return fetchLike();
+            case 5:
+              _context5.next = 10;
+              break;
+            case 7:
+              _context5.prev = 7;
+              _context5.t0 = _context5["catch"](0);
+              console.error('Error deleting like:', _context5.t0);
+            case 10:
+            case "end":
+              return _context5.stop();
+          }
+        }, _callee5, null, [[0, 7]]);
+      }));
+      return function deleteLike(_x) {
+        return _ref6.apply(this, arguments);
+      };
+    }();
     var __returned__ = {
       user: user,
       shop: shop,
@@ -21298,6 +21330,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       reserveId: reserveId,
       cancel: cancel,
       goToDetail: goToDetail,
+      like: like,
+      likeId: likeId,
+      deleteLike: deleteLike,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       get axios() {
@@ -21435,7 +21470,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var shops = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
     var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.useRouter)();
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var json, data;
+      var json, data, likeShops, like;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -21445,7 +21480,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             json = _context.sent;
             data = json.data;
             shops.value = data.data;
-          case 5:
+            _context.next = 7;
+            return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://localhost/api/like");
+          case 7:
+            likeShops = _context.sent;
+            like = likeShops.data.like; // ログインユーザーのお気に入り情報をshops配列に反映する
+            shops.value.forEach(function (shop) {
+              // ログインユーザーのお気に入りに含まれているかを判定するフラグ
+              var isLiked = false;
+
+              // like配列内の各オブジェクトのshop_idと比較して、お気に入りに含まれているかを判定する
+              like.forEach(function (item) {
+                if (item.shop_id === shop.id) {
+                  isLiked = true;
+                }
+              });
+
+              // お気に入りに含まれている場合、shop.likeをtrueに設定する
+              shop.like = isLiked;
+              console.log(shop.like);
+            });
+          case 10:
           case "end":
             return _context.stop();
         }
@@ -21921,12 +21976,13 @@ var _hoisted_25 = {
 var _hoisted_26 = {
   "class": "list_item-button"
 };
-var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_27 = ["onClick"];
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   "class": "button_image",
   src: _heart_r_heart_png__WEBPACK_IMPORTED_MODULE_1__["default"],
   alt: "Image Button"
 }, null, -1 /* HOISTED */);
-var _hoisted_28 = [_hoisted_27];
+var _hoisted_29 = [_hoisted_28];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Header"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.user) + "さん", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "reserve_delete",
@@ -21948,10 +22004,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })
     }, "詳しくみる"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       "class": "like-button",
-      onClick: _cache[2] || (_cache[2] = function ($event) {
-        return _ctx.deleteLike($setup.shop.id);
-      })
-    }, [].concat(_hoisted_28))])]);
+      onClick: function onClick($event) {
+        return $setup.deleteLike(like.id);
+      }
+    }, [].concat(_hoisted_29), 8 /* PROPS */, _hoisted_27)])]);
   }), 128 /* KEYED_FRAGMENT */))])])])])], 64 /* STABLE_FRAGMENT */);
 }
 
