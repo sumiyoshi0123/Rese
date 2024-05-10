@@ -26,4 +26,14 @@ class Shop extends Model
     {
         return $this->hasMany(Reserve::class);
     }
+
+    public function Area()
+    {
+        return $this->belongsTo(Area::class);
+    }
+
+    public function Category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

@@ -42,4 +42,3 @@ Route::middleware((['auth:sanctum']))->group(function () {
 });
 
 Route::apiResource('/shop', ShopController::class);
-//Route::apiResource('/register', RegisterController::class);

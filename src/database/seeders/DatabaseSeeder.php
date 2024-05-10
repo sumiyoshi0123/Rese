@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Area;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,5 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(ShopsSeeder::class);
+        $this->call(AreasSeeder::class);
+        $this->call(CategoriesSeeder::class);
     }
 }

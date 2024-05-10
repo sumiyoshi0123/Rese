@@ -67,4 +67,10 @@ class ShopController extends Controller
     {
         //
     }
+
+    //検索機能
+    public function search()
+    {
+        
+    }
 }
