@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import Header from './Header.vue';
@@ -10,7 +10,13 @@ const router = useRouter()
 onMounted(async () => {
     const json = await axios.get("http://localhost/api/shop");
     const data = json.data;
-    shops.value = data.data;
+    shops.value = data.shopData;
+    areas.value = data.areaData;
+    categories.value = data.categoryData;
+
+    // 初期表示時に全てのショップを表示する
+    searchedShops.value = shops.value;
+    console.log(shops.value)
 
     const likeShops = await axios.get("http://localhost/api/like");
     const like = likeShops.data.like;
@@ -63,6 +69,34 @@ const toggleLike = async (shop_id) => {
     }
 }
 
+//検索機能
+
+//データを格納するための変数
+const selectedArea = ref('');
+const selectedCategory = ref('');
+const areas = ref([]);
+const categories = ref([]);
+const searchedShops = ref([]);
+const searchKeyword = ref('');
+
+watch([selectedArea, selectedCategory, searchKeyword], () => {
+    filterShops();
+});
+
+const filterShops = () => {
+    let filtered = shops.value;
+    if (selectedArea.value) {
+        filtered = filtered.filter(shop => shop.area.id === selectedArea.value);
+    }
+    if (selectedCategory.value) {
+        filtered = filtered.filter(shop => shop.category.id === selectedCategory.value);
+    }
+    if (searchKeyword.value) {
+        const keyword = searchKeyword.value.toLowerCase();
+        filtered = filtered.filter(shop => shop.name.toLowerCase().includes(keyword));
+    }
+    searchedShops.value = filtered.length > 0 ? filtered : shops.value;
+};
 </script>
 
 <template>
@@ -70,34 +104,28 @@ const toggleLike = async (shop_id) => {
         <Header />
         <div class="header_item-right">
             <form class="search_form">
-                <select class="search_area">
-                    <option>All area</option>
-                    <option>東京都</option>
-                    <option>大阪府</option>
-                    <option>福岡県</option>
+                <select class="search_area" v-model="selectedArea">
+                    <option value="">All area</option>
+                    <option v-for="area in areas" :key="area.id" :value="area.id">{{ area.name }}</option>
                 </select>
-                <select class="search_category">
-                    <option>All category</option>
-                    <option>寿司</option>
-                    <option>焼肉</option>
-                    <option>居酒屋</option>
-                    <option>イタリアン</option>
-                    <option>ラーメン</option>
+                <select class="search_category" v-model="selectedCategory">
+                    <option value="">All category</option>
+                    <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
                 </select>
-                <input class="search_word" value="Search ...">
+                <input class="search_Keyword" placeholder="Search ..." v-model="searchKeyword">
             </form>
         </div>
     </header>
     <main>
         <div class="shop-list">
-            <div class="shop-list_item" v-for="shop in shops" :key="shop.id">
+            <div class="shop-list_item" v-for="shop in searchedShops" :key="shop.id">
                 <div>
                     <img class="shop_image" :src="shop.img_url" alt="Image" />
                 </div>
                 <div class="list_item-name">{{ shop.name }}</div>
                 <div class="list_item-tag">
-                    <div class="tag1">#{{ shop.area }}</div>
-                    <div class="tag2">#{{ shop.category }}</div>
+                    <div class="tag1">#{{ shop.area.name }}</div>
+                    <div class="tag2">#{{ shop.category.name }}</div>
                 </div>
                 <div class="list_item-button" >
                         <button class="link-button" @click="goToDetail(shop.id)">詳しくみる</button>

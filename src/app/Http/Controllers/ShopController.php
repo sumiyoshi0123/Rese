@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
+use App\Models\Category;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 
@@ -14,9 +16,14 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $items = Shop::all();
+        $items = Shop::with('area', 'category')->get();
+        $areas = Area::all();
+        $categories = Category::all();
+
             return response()->json([
-                'data' => $items
+                'shopData' => $items,
+                'areaData' => $areas,
+                'categoryData' => $categories
             ], 200);
     }
 
@@ -39,7 +46,10 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        $item = Shop::find($id);
+        $item = Shop::with(['area' => function ($query) {
+            $query->select('id','name');
+        }, 'category'  => function ($query) {
+            $query->select('id','name');}])->find($id);
             return response()->json([
                 'data' => $item
             ], 200);
@@ -69,8 +79,21 @@ class ShopController extends Controller
     }
 
     //検索機能
-    public function search()
+    public function search(Request $request)
     {
-        
+        $shops = Shop::with('area', 'category')
+            ->AreaSearch($request->area_id)
+            ->CategorySearch($request->category_id)
+            ->KeywordSearch($request->keyword)
+            ->get();
+
+        $areas = Area::whereIn('id', $shops->pluck('area_id')->unique())->get();
+        $categories = Category::whereIn('id', $shops->pluck('category_id')->unique())->get();
+
+        return response()->json([
+            'data' => $shops,
+            'areas' => $areas,
+            'categories' => $categories
+        ], 200);
     }
 }

@@ -4,10 +4,10 @@ import axios from "axios";
 import { useRouter, useRoute } from "vue-router";
 import Header from './Header.vue';
 
-const shop = ref('')
-const date = ref('')
-const time = ref('')
-const number = ref('')
+const shop = ref({});
+const date = ref('');
+const time = ref('');
+const number = ref('');
 const options = [
     { value: '1', text: '1人' },
     { value: '2', text: '2人' },
@@ -20,11 +20,16 @@ const options = [
 const router = useRouter();
 const route = useRoute();
 
+const area = ref();
+const category = ref();
 
 onMounted(async () => {
     const id = route.params.id;
     const json = await axios.get(`http://localhost/api/shop/${id}`);
-    shop.value = json.data.data;
+    const data = json.data;
+    shop.value = data.data;
+    area.value = shop.value.area.name;
+    category.value = shop.value.category.name;
 });
 
 //shop_all.vueに戻る
@@ -54,7 +59,7 @@ const reserve = async (shop_id) => {
                 <div class="data_item-name">{{ shop.name }}</div>
             </div>
             <img class="data_image" :src="shop.img_url" alt="Image" />
-            <div class="data_tag">#{{ shop.area }}#{{ shop.category }}</div>
+            <div class="data_tag">#{{ area }}#{{ category }}</div>
             <div class="data_detail">{{ shop.detail }}</div>
         </div>
         <div class="reserve_form">

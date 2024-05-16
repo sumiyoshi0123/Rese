@@ -31,10 +31,10 @@ class ShopsSeeder extends Seeder
 
             Shop::create([
                 'name' => trim($row[0]),
-                'area' => trim(
+                'area_id' => trim(
                     $row[1]
                 ),
-                'category' => trim(
+                'category_id' => trim(
                     $row[2]
                 ),
                 'detail' => trim(

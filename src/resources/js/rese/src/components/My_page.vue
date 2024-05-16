@@ -10,13 +10,6 @@ const shop = ref('')
 const reserve = ref('')
 const likes = ref('')
 
-const fetchUser = async () => {
-    const json = await axios.get("http://localhost/api/register");
-    const loginUser = json.data.loginName;
-    const userName = loginUser[0];
-    user.value = userName['name'];
-};
-
 const fetchReserve = async () => {
     const json = await axios.get("http://localhost/api/reserve")
 
@@ -33,12 +26,16 @@ const fetchReserve = async () => {
 const fetchLike = async () => {
     const json = await axios.get("http://localhost/api/like")
     likes.value = json.data.like;
-    //console.log(likes.value);
+    console.log(likes.value);
 }
 
 // コンポーネントがマウントされた時にデータを取得
-onMounted(() => {
-    fetchUser();
+onMounted(async () => {
+    const json = await axios.get("http://localhost/api/register");
+    const loginUser = json.data.loginName;
+    const userName = loginUser[0];
+    user.value = userName['name'];
+
     fetchReserve();
     fetchLike();
 });
