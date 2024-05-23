@@ -24,24 +24,24 @@ const register = async () => {
     <Header />
     <main>
         <div class="register_from">
-            <div class="register_form-title">Registration</div>
+            <div class="form-title">
+                <p class="form-title_item">Registration</p>
+            </div>
             <div class="from_item">
-                <div class="form_item-name">
-                    <div class="name-img">
-                    </div>
+                <div class="name_form">
+                    <img class="user_icon" src="../img/person_alt.png" alt="User Icon" />
                     <input type="text" v-model="name" class="item-name" placeholder="Username">
                 </div>
-                <div class="form_item-email">
-                    <div class="email-img">
-                    </div>
+                <div class="email_form">
+                    <img class="email_icon" src="../img/email.png" alt="Email Icon" />
                     <input type="text" v-model="email" class="item-email" placeholder="Email">
                 </div>
-                <div class="form_item-pass">
-                    <div class="pass-img">
-                    </div>
-                    <input type="text" class="item-pass" v-model="password" placeholder="Password">
+                <div class="pass_form">
+                    <img class="pass_icon" src="../img/lock.png" alt="Pass Icon" />
+                    <input type="password" class="item-pass" v-model="password" placeholder="Password">
+
                 </div>
-                <button class="from_item-button" @click="register()">登録</button>
+                <button class="from_item-button" @click="register">登録</button>
             </div>
         </div>
     </main>
@@ -49,19 +49,32 @@ const register = async () => {
 
 <style>
 .register_from{
-    width: 220px;
+    width: 250px;
+    margin-left: 500px;
+    box-shadow: 2px 2px 10px 0px gray;
 }
-.register_form-title{
+.form-title{
     color: white;
     background-color: #305DFF;
-    width: 100%;
-    padding: 10px 0px;
+    padding: 2px 0px;
+}
+.form-title_item{
+    margin-left: 5px;
 }
 .form_item{
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: white;
+}
+.name_form, .email_form, .pass_form{
+    display: flex;
+}
+.user_icon, .email_icon, .pass_icon{
+    width: 20px;
+    height: 20px;
+    margin-top: 10px;
+    padding-left: 10px;
 }
 .item-name, .item-email, .item-pass{
     border: none;

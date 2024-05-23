@@ -5,18 +5,18 @@ import { useRouter } from "vue-router";
 import Header from './Header.vue';
 
 //ユーザーのデータを取得
-const user = ref('')
-const shop = ref('')
-const reserve = ref('')
-const likes = ref('')
+const user = ref('');
+const shop = ref('');
+const reserve = ref('');
+const likes = ref([]);
 
 const fetchReserve = async () => {
     const json = await axios.get("http://localhost/api/reserve")
 
-    if (reserve !== null) {
-        //予約情報
+    if (json.data.reserve) {
+        // 予約情報
         reserve.value = json.data.reserve;
-        //予約しているshopの情報
+        // 予約しているshopの情報
         shop.value = json.data.reserve.shop;
     } else {
         console.log('Reservation not found.');
@@ -25,7 +25,7 @@ const fetchReserve = async () => {
 
 const fetchLike = async () => {
     const json = await axios.get("http://localhost/api/like")
-    likes.value = json.data.like;
+    likes.value = json.data.likes;
     console.log(likes.value);
 }
 
@@ -41,19 +41,23 @@ onMounted(async () => {
 });
 
 // 予約削除機能
-const reserveId = reserve.id;
-const cancel = async () => {
-    const json = await axios.delete(`http://localhost/api/reserve/${reserveId}`)
+const cancel = async (reserveId) => {
+    try {
+        await axios.delete(`http://localhost/api/reserve/${reserveId}`);
+        reserve.value = '';
+        shop.value = '';
+    } catch (error) {
+        console.error('Error deleting reservation:', error);
+    }
 }
 
 //Detail.vueへ
+const router = useRouter();
 const goToDetail = (shopId) => {
     router.push({ name: 'detail', params: { id: shopId } });
 };
 
 //お気に入り削除機能
-const like = ({});
-const likeId = like.id;
 const deleteLike = async (likeId) => {
     try {
         // サーバーにDELETEリクエストを送信してお気に入りを削除
@@ -75,28 +79,29 @@ const deleteLike = async (likeId) => {
             <div class="reserve_items">
                 <div class="reserve_title">予約状況</div>
                 <div class="reserve_data">
-                    <p class="reserve_icon"></p>
                     <div class="reserve_menu">
-                        <p>予約</p>
+                        <img class="reserve_icon" src="../img/clock.png"></img>
+                        <p class="reserve_number">予約{{ reserve.id }}</p>
                         <button class="reserve_delete" @click="cancel(reserve.id)">
+                            <img class="delete_icon" src="../img/multiply_circle.png" alt="Image Button"></img>
                         </button>
                     </div>
                     <table class="data_items">
-                        <tr>
-                            <th>Shop</th>
-                            <td class="item">{{ shop.name }}</td>
+                        <tr class="item">
+                            <th class="item_title">Shop</th>
+                            <td class="item_data">{{ shop.name }}</td>
                         </tr>
-                        <tr>
-                            <th>Date</th>
-                            <td class="item">{{ reserve.date }}</td>
+                        <tr class="item">
+                            <th class="item_title">Date</th>
+                            <td class="item_data">{{ reserve.date }}</td>
                         </tr>
-                        <tr>
-                            <th>Time</th>
-                            <td class="item">{{ reserve.time }}</td>
+                        <tr class="item">
+                            <th class="item_title">Time</th>
+                            <td class="item_data">{{ reserve.time }}</td>
                         </tr>
-                        <tr>
-                            <th>Number</th>
-                            <td class="item">{{ reserve.number + '人' }}</td>
+                        <tr class="item">
+                            <th class="item_title">Number</th>
+                            <td class="item_data">{{ reserve.number + '人' }}</td>
                         </tr>
                     </table>
                 </div>
@@ -110,13 +115,13 @@ const deleteLike = async (likeId) => {
                         </div>
                         <div class="list_item-name">{{ like.shop.name }}</div>
                         <div class="list_item-tag">
-                            <div class="tag1">#{{ like.shop.area }}</div>
-                            <div class="tag2">#{{ like.shop.category }}</div>
+                            <div class="tag1">#{{ like.shop.area.name }}</div>
+                            <div class="tag2">#{{ like.shop.category.name }}</div>
                         </div>
                         <div class="list_item-button" >
-                                <button class="link-button" @click="goToDetail(shop.id)">詳しくみる</button>
+                            <button class="link-button" @click="goToDetail(shop.id)">詳しくみる</button>
                             <button class="like-button" @click="deleteLike(like.id)">
-                                <img class="button_image" src="../heart/r_heart.png" alt="Image Button">
+                                <img class="button_image" src="../img/r_heart.png" alt="Image Button">
                             </button>
                         </div>
                     </div>
@@ -128,20 +133,61 @@ const deleteLike = async (likeId) => {
 </template>
 
 <style>
+.user_name{
+    font-size: larger;
+    font-weight: bold;
+}
 .user_item{
     display: flex;
 }
 .reserve_items{
-    width: 60%;
+    width: 40%;
+    height: auto;
 }
-.reserve_delete{
-    width: 20px;
-    height: 20px;
+.reserve_title{
+    font-weight: bold;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.reserve_data {
+    margin-left: 20px;
+    width: 80%;
+    height: 250px;
+    color: white;
+    background-color: #4D7FFF;
+    text-align: left;
+}
+.item {
+    padding: 10px 0;
+}
+.item_title, .item_data {
+    padding: 10px;
 }
 .reserve_menu{
     display: flex;
     align-items: center;
 }
+.reserve_icon{
+    width: 20px;
+    height: 20px;
+    padding-left: 10px;
+}
+.reserve_number{
+    padding-left: 20px;
+}
+.reserve_delete{
+    border: none;
+    background-color: 4D7FFF;
+    text-align: right;
+    margin-right: 20px;
+    background-color: #4D7FFF;
+}
+.delete_icon{
+    widows: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
 
 
 .like_data{
@@ -150,6 +196,11 @@ const deleteLike = async (likeId) => {
     justify-content: center;
     width: 1100px;
     margin-left: 120px;
+}
+.like_title{
+    font-weight: bold;
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 .like_list{
     display: flex;
@@ -187,6 +238,7 @@ const deleteLike = async (likeId) => {
     font-size: 12px;
     border-radius: 5px;
     margin: 5px;
+    cursor: pointer;
 }
 .like-button{
     margin: 5px;

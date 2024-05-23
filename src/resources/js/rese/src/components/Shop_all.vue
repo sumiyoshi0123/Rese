@@ -4,8 +4,8 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import Header from './Header.vue';
 
-const shops = ref()
-const router = useRouter()
+const shops = ref([]);
+const router = useRouter();
 
 onMounted(async () => {
     const json = await axios.get("http://localhost/api/shop");
@@ -16,10 +16,11 @@ onMounted(async () => {
 
     // 初期表示時に全てのショップを表示する
     searchedShops.value = shops.value;
-    console.log(shops.value)
+    //console.log(shops.value)
 
     const likeShops = await axios.get("http://localhost/api/like");
-    const like = likeShops.data.like;
+    const like = likeShops.data.likes;
+    //console.log(like);
 
     // ログインユーザーのお気に入り情報をshops配列に反映する
     shops.value.forEach(shop => {
@@ -35,7 +36,6 @@ onMounted(async () => {
 
         // お気に入りに含まれている場合、shop.likeをtrueに設定する
         shop.like = isLiked;
-        console.log(shop.like);
     });
 });
 
@@ -65,7 +65,6 @@ const toggleLike = async (shop_id) => {
             like: newLikeState
         });
         //更新されたお気に入りの状態をサーバーに送信
-
     }
 }
 
@@ -112,7 +111,10 @@ const filterShops = () => {
                     <option value="">All category</option>
                     <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
                 </select>
-                <input class="search_Keyword" placeholder="Search ..." v-model="searchKeyword">
+                <div class="search_input">
+                    <img class="search_icon" src="../img/search.png" alt="Image" />
+                    <input class="search_Keyword" placeholder="Search ..." v-model="searchKeyword">
+                </div>
             </form>
         </div>
     </header>
@@ -130,8 +132,8 @@ const filterShops = () => {
                 <div class="list_item-button" >
                         <button class="link-button" @click="goToDetail(shop.id)">詳しくみる</button>
                     <button class="like-button" @click="toggleLike(shop.id)">
-                        <img v-if="shop.like" class="button_image" src="../heart/r_heart.png" alt="Image Button">
-                        <img v-else class="button_image" src="../heart/w_heart.png" alt="Image Button">
+                        <img v-if="shop.like" class="button_image" src="../img/r_heart.png" alt="Image Button" />
+                        <img v-else class="button_image" src="../img/w_heart.png" alt="Image Button" />
                     </button>
                 </div>
             </div>
@@ -153,6 +155,22 @@ const filterShops = () => {
     height: 30px;
     width: 250px;
     padding-right: 100px;
+}
+.search_input {
+    position: relative;
+    display: inline-block;
+}
+.search_icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+}
+.search_Keyword {
+    height: 25px;
+    padding-left: 40px;
 }
 
 /* main */

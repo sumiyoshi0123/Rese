@@ -23,7 +23,7 @@ const login = () => {
 
 <style>
 .thanks_item{
-    width: 30%;
+    width: 20%;
     display: flex;
     flex-direction: column;
     justify-content: center;

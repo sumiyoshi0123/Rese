@@ -77,23 +77,4 @@ class ShopController extends Controller
     {
         //
     }
-
-    //検索機能
-    public function search(Request $request)
-    {
-        $shops = Shop::with('area', 'category')
-            ->AreaSearch($request->area_id)
-            ->CategorySearch($request->category_id)
-            ->KeywordSearch($request->keyword)
-            ->get();
-
-        $areas = Area::whereIn('id', $shops->pluck('area_id')->unique())->get();
-        $categories = Category::whereIn('id', $shops->pluck('category_id')->unique())->get();
-
-        return response()->json([
-            'data' => $shops,
-            'areas' => $areas,
-            'categories' => $categories
-        ], 200);
-    }
 }

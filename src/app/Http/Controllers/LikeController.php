@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\like;
 use App\Models\Shop;
+use App\Models\Area;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,10 +19,10 @@ class LikeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $like = Like::where('user_id', $user->id)->with('shop')->get();
+        $likes = Like::where('user_id', $user->id)->with(['shop.area', 'shop.category'])->get();
 
         return response()->json([
-            'like' => $like
+            'likes' => $likes
         ]);
     }
 

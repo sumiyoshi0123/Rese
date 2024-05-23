@@ -36,26 +36,4 @@ class Shop extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
-    //ローカルスコープ
-    public function scopeAreaSearch($query,$area_id)
-    {
-        if (!empty($asea_id)) {
-            $query->where('area_id', $area_id);
-        }
-    }
-
-    public function scopeCategorySearch($query, $category_id)
-    {
-        if (!empty($category_id)) {
-            $query->where('category_id', $category_id);
-        }
-    }
-
-    public function scopeKeywordSearch($query, $keyword)
-    {
-        if (!empty($keyword)) {
-            $query->where('content', 'like', '%' . $keyword . '%');
-        }
-    }
 }

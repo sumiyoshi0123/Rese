@@ -1,12 +1,19 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+
+// 画像をインポート
+import menuImageClosed from '../img/menu.png';
+import menuImageOpen from '../img/multiply.png';
 
 const router = useRouter();
 
 //メニュー画面表示
 const open = ref(false);
+
+const menuImage = computed(() => open.value ? menuImageOpen : menuImageClosed);
+
 const menuButton = () => {
     open.value = !open.value;
 }
@@ -36,17 +43,24 @@ const logout = async () => {
 const myPage = () => {
     router.push({ name: "my_page" });
 }
+
+// ユーザーがログインしているかどうかを確認
+const isLoggedIn = computed(() => {
+    return !!localStorage.getItem('token');
+});
 </script>
 
 <template>
     <div class="header">
-        <button class="menu" @click="menuButton"></button>
+        <button class="menu" @click="menuButton">
+            <img class="menu_icon" :src="menuImage" alt="Menu Icon" />
+        </button>
         <ul class="menu_item" v-if="open">
             <li class="item1" @click="home">Home</li>
-            <li class="item2" @click="register">Registration</li>
-            <li class="item3" @click="login">Login</li>
-            <li class="item4" @click="logout">Logout</li>
-            <li class="item5" @click="myPage">Mypage</li>
+            <li class="item2" v-if="!isLoggedIn" @click="register">Registration</li>
+            <li class="item3" v-if="!isLoggedIn" @click="login">Login</li>
+            <li class="item4" v-if="isLoggedIn" @click="logout">Logout</li>
+            <li class="item5" v-if="isLoggedIn" @click="myPage">Mypage</li>
             </ul>
         <h1 class="name">Rese</h1>
     </div>
@@ -62,6 +76,10 @@ const myPage = () => {
     height: 30px;
     margin-top: 28px;
     background-color: #305DFF;
+}
+.menu_icon {
+    width: 100%;
+    height: 100%;
 }
 .menu_item {
     width: 100%;

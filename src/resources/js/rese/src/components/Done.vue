@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from "vue";
 import { useRouter } from "vue-router";
 import Header from './Header.vue';
 
@@ -23,7 +22,7 @@ const back = () => {
 
 <style>
 .thanks_item{
-    width: 30%;
+    width: 20%;
     display: flex;
     flex-direction: column;
     justify-content: center;

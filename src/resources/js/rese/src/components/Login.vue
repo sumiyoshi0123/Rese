@@ -26,10 +26,18 @@ const login = async () => {
     <Header />
     <main>
         <div class="login_form">
-            <div class="login_form-title">Login</div>
+            <div class="form-title">
+                <p class="form-title_item">Login</p>
+            </div>
             <div class="form_item">
-                <input type="text" class="item-email" v-model="email" placeholder="Email">
-                <input type="text" class="item-pass" v-model="password" placeholder="Password">
+                <div class="email_form">
+                    <img class="email_icon" src="../img/email.png" alt="Email Icon" />
+                    <input type="text" class="item-email" v-model="email" placeholder="Email">
+                </div>
+                <div class="pass_form">
+                    <img class="pass_icon" src="../img/lock.png" alt="Pass Icon" />
+                    <input type="text" class="item-pass" v-model="password" placeholder="Password">
+                </div>
                 <button class="from_item-button"  @click="login()">ログイン</button>
             </div>
         </div>
@@ -38,19 +46,32 @@ const login = async () => {
 
 <style>
 .login_form{
-    width: 220px;
+    width: 250px;
+    margin-left: 500px;
+    box-shadow: 2px 2px 10px 0px gray;
 }
-.login_form-title{
+.form-title{
     color: white;
     background-color: #305DFF;
-    width: 100%;
-    padding: 10px 0px;
+    padding: 20px 0px;
+}
+.form-title_item{
+    margin-left: 5px;
 }
 .from_item{
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: white;
+}
+.email_form, .pass_form{
+    display: flex;
+}
+.email_icon, .pass_icon{
+    width: 20px;
+    height: 20px;
+    margin-top: 10px;
+    padding-left: 10px;
 }
 .item-email, .item-pass{
     border: none;
